@@ -17,3 +17,17 @@ function security_pack_install() {
   $security_pack->configure_autologout_defaults();
   $security_pack->configure_loginsecurity_defaults();
 }
+
+function security_pack_requirements($phase) {
+  if ($phase == 'runtime') {
+    if (\Drupal::config('seckit.settings')->get('seckit_xss.csp.report-only') === TRUE) {
+      $requirements['security_pack'] = [
+        'title' => t('Content Security Policy Enforcement'),
+        'value' => t('The Content Security Policy is in report-only mode.'),
+        'description' => t('It is recommended you review the log for violations, add legitimate entries to Security Kit, then disable the Report Only option.'),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+    }
+    return $requirements;
+  }
+}
