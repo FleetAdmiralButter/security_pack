@@ -4,7 +4,7 @@ Security Pack automatically installs a number of recommended security modules on
 
 Out of the box configuration is tailored to be as unobtrusive as possible, while still providing good base security configuration.
 
-After installation, it configures the following:
+After installation, it enables/configures the following:
 
 1. Password Policy:
     * All authenticated users will have a password expiration of 90 days.
@@ -29,3 +29,6 @@ After installation, it configures the following:
     * Once you're satisfied that nothing legitimate is being blocked, you should disable "Report Only" in the SecKit settings to start enforcing the Content Security Policy.
     * CSRF protection is enabled to stop other domains making requests to your Drupal site.
     * The HTTP Strict Transport Security (HSTS) header is enabled to force browsers to serve your site over HTTPS.
+
+6. Username Enumeration Prevention:
+    * Tries to prevent anonymous users from discovering the IDs or usernames of registered accounts.
