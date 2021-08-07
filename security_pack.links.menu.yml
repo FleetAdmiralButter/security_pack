@@ -1,0 +1,6 @@
+security_pack.settings_form:
+  title: Security Pack
+  description: Configure Security Pack.
+  parent: system.admin_config_system
+  route_name: security_pack.settings_form
+  weight: 10

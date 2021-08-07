@@ -1,0 +1,14 @@
+name: Security Pack
+type: module
+description: Installs and configures recommended Drupal security modules.
+package: security_pack
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:seckit
+  - drupal:username_enumeration_prevention
+  - drupal:antibot
+  - drupal:login_security
+  - drupal:autologout
+  - drupal:password_policy
+

@@ -1,0 +1,19 @@
+<?php
+
+use Drupal\security_pack\SecurityPackOperation;
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Security Pack module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function security_pack_install() {
+  $security_pack = new SecurityPackOperation();
+  $security_pack->configure_seckit_defaults();
+  $security_pack->configure_antibot_defaults();
+  $security_pack->configure_autologout_defaults();
+  $security_pack->configure_loginsecurity_defaults();
+}

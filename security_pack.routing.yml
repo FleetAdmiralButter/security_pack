@@ -1,0 +1,7 @@
+security_pack.settings_form:
+  path: '/admin/config/system/security-pack'
+  defaults:
+    _title: 'Security Pack settings'
+    _form: 'Drupal\security_pack\Form\SettingsForm'
+  requirements:
+    _permission: 'administer security_pack configuration'
