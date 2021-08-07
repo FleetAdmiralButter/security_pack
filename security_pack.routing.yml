@@ -4,4 +4,4 @@ security_pack.settings_form:
     _title: 'Security Pack settings'
     _form: 'Drupal\security_pack\Form\SettingsForm'
   requirements:
-    _permission: 'administer security_pack configuration'
+    _permission: 'administer site configuration'
