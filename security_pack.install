@@ -31,3 +31,13 @@ function security_pack_requirements($phase) {
     return $requirements;
   }
 }
+
+/**
+ * Implements hook_uninstall().
+ */
+function security_pack_uninstall() {
+  // Try to clean up after ourselves as best we can.
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('password_policy.password_policy.security_pack_default');
+  $config->delete();
+}
