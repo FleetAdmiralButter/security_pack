@@ -45,6 +45,7 @@ function _import_single_config($config_name, array $locations = [], $prioritise_
   $module_installer = \Drupal::service('module_installer');
   $theme_handler = \Drupal::service('theme_handler');
   $string_translation = \Drupal::service('string_translation');
+  $module_extension_list = \Drupal::service('extension.list.module');
 
   \Drupal::config($config_name);
 
@@ -68,7 +69,8 @@ function _import_single_config($config_name, array $locations = [], $prioritise_
     $module_handler,
     $module_installer,
     $theme_handler,
-    $string_translation
+    $string_translation,
+    $module_extension_list
   );
 
   try {
