@@ -35,6 +35,16 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => FALSE,
       '#description' => $this->t('This will reset the configuration for included modules back to default.')
     ];
+
+    $form['notice'] = array(
+      '#type' => 'fieldset',
+      '#title' => $this->t('Notice'),
+    );
+
+    $form['notice']['warning'] = [
+      '#type' => 'label',
+      '#title' => $this->t('This will reset all settings. If you have made any manual modifications, please note them down now.'),
+    ];
     return parent::buildForm($form, $form_state);
   }
 
@@ -53,10 +63,7 @@ class SettingsForm extends ConfigFormBase {
 
     if($form_state->getValue('reset')) {
       $security_pack = new SecurityPackOperation();
-      $security_pack->configure_seckit_defaults();
-      $security_pack->configure_antibot_defaults();
-      $security_pack->configure_autologout_defaults();
-      $security_pack->configure_loginsecurity_defaults();
+      $security_pack->import_default_config();
     }
   }
 }
