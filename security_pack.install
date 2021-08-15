@@ -67,3 +67,11 @@ function security_pack_uninstall() {
   $config = $config_factory->getEditable('password_policy.password_policy.security_pack_default');
   $config->delete();
 }
+
+/**
+ * Re-install config due to a rewrite of handlers.
+ */
+function security_pack_update_8001() {
+  $security_pack = new SecurityPackOperation();
+  $security_pack->import_default_config();
+}
