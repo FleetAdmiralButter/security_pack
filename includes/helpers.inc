@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Helper functions for importing configuration.
+ * Attribution: https://git.drupalcode.org/project/tide_core/-/blob/master/includes/helpers.inc
+ */
+
 use Drupal\config\StorageReplaceDataWrapper;
 use Drupal\Core\Config\ConfigImporter;
 use Drupal\Core\Config\FileStorage;

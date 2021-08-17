@@ -1,5 +1,19 @@
 # Drupal Security Pack
 
+CONTENTS OF THIS FILE
+---------------------
+
+* Introduction
+* Requirements
+* Recommended modules
+* Installation
+* Configuration
+* Troubleshooting
+* FAQ
+* Maintainers
+
+INTRODUCTION
+------------
 Security Pack automatically installs a number of recommended security modules onto your Drupal site.
 
 Out of the box configuration is tailored to be as unobtrusive as possible, while still providing good base security configuration.
@@ -32,3 +46,48 @@ After installation, it enables/configures the following:
 
 6. Username Enumeration Prevention:
     * Tries to prevent anonymous users from discovering the IDs or usernames of registered accounts.
+
+REQUIREMENTS
+------------
+
+This module requires the following:
+
+* [Password Policy] (https://www.drupal.org/project/password_policy)
+* [Auto Logout] (https://www.drupal.org/project/autologout)
+* [Antibot] (https://www.drupal.org/project/antibot)
+* [Login Security] (https://www.drupal.org/project/login_security)
+* [Security Kit] (https://www.drupal.org/project/seckit)
+* [Username Enumeration Prevention] (https://www.drupal.org/project/username_enumeration_prevention)
+
+INSTALLATION
+------------
+
+* It is recommended that you install and manage Security Pack using Composer. However, if you prefer not to use it,
+  simply download and copy the modules listed in the requirements section to your site's modules folder. When you enable Security Pack, it will install and configure them automatically.
+
+CONFIGURATION
+------------
+
+* Security Pack does not have very much configuration in and of itself.
+  However, a reset form is available at Administration >> System >> Security Pack. This will allow you to reset provided configuration to default if you have made any manual changes.
+
+TROUBLESHOOTING
+---------------
+* As described above, you can reset Security Pack to default by using the configuration form.
+* If you decide to no longer use Security Pack, you can safely uninstall it and its accompanying modules via Drush or the admin UI.
+
+FAQ
+---
+
+Q: Who is Security Pack for?
+
+A: This module is aimed at site builders who lack PHP knowledge or are still new to Drupal in general.
+   It hopes to provide a good base level of protection against common threats such as spambots or attackers who try to bruteforce login credentials.
+
+
+MAINTAINERS
+-----------
+
+Current maintainers:
+   * Ming Quah (FleetAdmiralButter) - https://www.drupal.org/u/fleetadmiralbutter
+
