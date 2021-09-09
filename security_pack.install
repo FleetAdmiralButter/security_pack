@@ -16,9 +16,10 @@ function security_pack_install() {
     return;
   }
 
-  // Import configuration for other modules separately to avoid PreExistingConfigExceptions.
+  // Import configuration for other modules separately
+  // to avoid PreExistingConfigExceptions.
   $security_pack = new SecurityPackOperation();
-  $security_pack->import_default_config();
+  $security_pack->importDefaultConfig();
 }
 
 function security_pack_requirements($phase) {
@@ -35,6 +36,7 @@ function security_pack_requirements($phase) {
         'description' => t('It is recommended you review the log for violations, add legitimate entries to Security Kit, then disable the Report Only option.'),
         'severity' => REQUIREMENT_WARNING,
       ];
+
     } else {
       $requirements['security_pack'] = [
         'title' => t('Content Security Policy Enforcement'),
@@ -73,5 +75,5 @@ function security_pack_uninstall() {
  */
 function security_pack_update_8001() {
   $security_pack = new SecurityPackOperation();
-  $security_pack->import_default_config();
+  $security_pack->importDefaultConfig();
 }

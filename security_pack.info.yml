@@ -14,4 +14,3 @@ dependencies:
   - drupal:password_policy_character_types
   - drupal:password_policy_characters
   - drupal:password_policy_length
-

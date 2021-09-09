@@ -33,13 +33,13 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Reset Security Pack configuration to default?'),
       '#default_value' => FALSE,
-      '#description' => $this->t('This will reset the configuration for included modules back to default.')
+      '#description' => $this->t('This will reset the configuration for included modules back to default.'),
     ];
 
-    $form['notice'] = array(
+    $form['notice'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Notice'),
-    );
+    ];
 
     $form['notice']['warning'] = [
       '#type' => 'label',
@@ -61,9 +61,10 @@ class SettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
-    if($form_state->getValue('reset')) {
+    if ($form_state->getValue('reset')) {
       $security_pack = new SecurityPackOperation();
-      $security_pack->import_default_config();
+      $security_pack->importDefaultConfig();
     }
   }
+
 }
