@@ -25,7 +25,7 @@ class SecurityPackOperation {
     $config_location = [drupal_get_path('module', 'security_pack') . '/config/optional'];
     foreach($configs as $config) {
       \Drupal::configFactory()->getEditable($config)->delete();
-      _import_single_config($config, $config_location);
+      _security_pack_import_single_config($config, $config_location);
     }
     drupal_flush_all_caches();
   }

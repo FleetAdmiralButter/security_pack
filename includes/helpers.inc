@@ -10,7 +10,7 @@ use Drupal\Core\Config\ConfigImporter;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\StorageComparer;
 
-function _read_config($id, array $locations = [], $prioritise_sync = TRUE) {
+function _security_pack_read_config($id, array $locations = [], $prioritise_sync = TRUE) {
   static $storages;
 
   global $config_directories;
@@ -38,8 +38,8 @@ function _read_config($id, array $locations = [], $prioritise_sync = TRUE) {
   return $storages[$path]->read($id);
 }
 
-function _import_single_config($config_name, array $locations = [], $prioritise_sync = TRUE) {
-  $config_data = _read_config($config_name, $locations, $prioritise_sync);
+function _security_pack_import_single_config($config_name, array $locations = [], $prioritise_sync = TRUE) {
+  $config_data = _security_pack_read_config($config_name, $locations, $prioritise_sync);
 
   $config_storage = \Drupal::service('config.storage');
   $event_dispatcher = \Drupal::service('event_dispatcher');
