@@ -2,6 +2,8 @@
 
 namespace Drupal\security_pack;
 
+use Drupal;
+
 /**
  * Class for helper functions.
  */
@@ -24,7 +26,7 @@ class SecurityPackOperation {
     module_load_include('inc', 'security_pack', 'includes/helpers');
     $config_location = [drupal_get_path('module', 'security_pack') . '/config/optional'];
     foreach($configs as $config) {
-      \Drupal::configFactory()->getEditable($config)->delete();
+      Drupal::configFactory()->getEditable($config)->delete();
       _security_pack_import_single_config($config, $config_location);
     }
     drupal_flush_all_caches();

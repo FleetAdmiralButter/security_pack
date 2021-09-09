@@ -12,7 +12,7 @@ use Drupal\security_pack\SecurityPackOperation;
  */
 function security_pack_install() {
 
-  if (\Drupal::isConfigSyncing()) {
+  if (Drupal::isConfigSyncing()) {
     return;
   }
 
@@ -24,8 +24,8 @@ function security_pack_install() {
 function security_pack_requirements($phase) {
   if ($phase == 'runtime') {
 
-    $csp_enforced = (\Drupal::config('seckit.settings')->get('seckit_xss.csp.report-only') === TRUE);
-    $password_policy_present = (\Drupal::config('password_policy.password_policy.security_pack_default')->get('id') === 'security_pack_default');
+    $csp_enforced = (Drupal::config('seckit.settings')->get('seckit_xss.csp.report-only') === TRUE);
+    $password_policy_present = (Drupal::config('password_policy.password_policy.security_pack_default')->get('id') === 'security_pack_default');
 
     // Check that CSP enforcement is enabled.
     if ($csp_enforced) {
@@ -63,7 +63,7 @@ function security_pack_requirements($phase) {
  */
 function security_pack_uninstall() {
   // Try to clean up after ourselves as best we can.
-  $config_factory = \Drupal::configFactory();
+  $config_factory = Drupal::configFactory();
   $config = $config_factory->getEditable('password_policy.password_policy.security_pack_default');
   $config->delete();
 }

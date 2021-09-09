@@ -41,18 +41,18 @@ function _security_pack_read_config($id, array $locations = [], $prioritise_sync
 function _security_pack_import_single_config($config_name, array $locations = [], $prioritise_sync = TRUE) {
   $config_data = _security_pack_read_config($config_name, $locations, $prioritise_sync);
 
-  $config_storage = \Drupal::service('config.storage');
-  $event_dispatcher = \Drupal::service('event_dispatcher');
-  $config_manager = \Drupal::service('config.manager');
-  $lock_persistent = \Drupal::service('lock.persistent');
-  $config_typed = \Drupal::service('config.typed');
-  $module_handler = \Drupal::service('module_handler');
-  $module_installer = \Drupal::service('module_installer');
-  $theme_handler = \Drupal::service('theme_handler');
-  $string_translation = \Drupal::service('string_translation');
-  $module_extension_list = \Drupal::service('extension.list.module');
+  $config_storage = Drupal::service('config.storage');
+  $event_dispatcher = Drupal::service('event_dispatcher');
+  $config_manager = Drupal::service('config.manager');
+  $lock_persistent = Drupal::service('lock.persistent');
+  $config_typed = Drupal::service('config.typed');
+  $module_handler = Drupal::service('module_handler');
+  $module_installer = Drupal::service('module_installer');
+  $theme_handler = Drupal::service('theme_handler');
+  $string_translation = Drupal::service('string_translation');
+  $module_extension_list = Drupal::service('extension.list.module');
 
-  \Drupal::config($config_name);
+  Drupal::config($config_name);
 
   $source_storage = new StorageReplaceDataWrapper($config_storage);
   $source_storage->replaceData($config_name, $config_data);
@@ -80,12 +80,12 @@ function _security_pack_import_single_config($config_name, array $locations = []
 
   try {
     $config_importer->import();
-    \Drupal::cache('config')->delete($config_name);
+    Drupal::cache('config')->delete($config_name);
   }
   catch (Exception $exception) {
     foreach ($config_importer->getErrors() as $error) {
-      \Drupal::logger('security_pack')->error($error);
-      \Drupal::messenger()->addError($error);
+      Drupal::logger('security_pack')->error($error);
+      Drupal::messenger()->addError($error);
     }
     throw $exception;
   }
