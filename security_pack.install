@@ -24,9 +24,6 @@ function security_pack_install() {
 
 /**
  * Implements hook_requirements().
- * @param $phase
- *
- * @return array|void
  */
 function security_pack_requirements($phase) {
   if ($phase == 'runtime') {
