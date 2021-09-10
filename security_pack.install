@@ -40,7 +40,8 @@ function security_pack_requirements($phase) {
         'severity' => REQUIREMENT_WARNING,
       ];
 
-    } else {
+    }
+    else {
       $requirements['security_pack'] = [
         'title' => t('Content Security Policy Enforcement'),
         'value' => t('The Content Security Policy is in enforcement mode.'),
