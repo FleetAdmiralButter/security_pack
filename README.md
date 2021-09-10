@@ -117,4 +117,3 @@ MAINTAINERS
 Current maintainers:
    * Ming Quah (FleetAdmiralButter) - 
      https://www.drupal.org/u/fleetadmiralbutter
-   

@@ -1,8 +1,5 @@
 <?php
 
-use Drupal\Component\Utility\Html;
-use Drupal\Core\Routing\RouteMatchInterface;
-
 /**
  * @file
  * Primary module hooks for Security Pack module.
@@ -12,11 +9,13 @@ use Drupal\Core\Routing\RouteMatchInterface;
  * @see https://www.drupal.org/node/2217931
  */
 
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Routing\RouteMatchInterface;
+
 /**
  * Implements hook_help().
  */
-function security_pack_help($route_name, RouteMatchInterface $route_match)
-{
+function security_pack_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.security_pack':
       $text = file_get_contents(__DIR__ . '/README.md');
@@ -30,6 +29,7 @@ function security_pack_help($route_name, RouteMatchInterface $route_match)
         $filter = $filter_manager->createInstance('markdown', $config);
         return $filter->process($text, 'en');
       }
+
   }
   return NULL;
 }

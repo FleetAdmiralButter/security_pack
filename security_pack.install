@@ -1,11 +1,11 @@
 <?php
 
-use Drupal\security_pack\SecurityPackOperation;
-
 /**
  * @file
  * Install, update and uninstall functions for the Security Pack module.
  */
+
+use Drupal\security_pack\SecurityPackOperation;
 
 /**
  * Implements hook_install().
@@ -22,6 +22,12 @@ function security_pack_install() {
   $security_pack->importDefaultConfig();
 }
 
+/**
+ * Implements hook_requirements().
+ * @param $phase
+ *
+ * @return array|void
+ */
 function security_pack_requirements($phase) {
   if ($phase == 'runtime') {
 

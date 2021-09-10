@@ -8,6 +8,10 @@ use Drupal;
  * Class for helper functions.
  */
 class SecurityPackOperation {
+
+  /**
+   * {@inheritdoc}
+   */
   public function __construct() {
   }
 

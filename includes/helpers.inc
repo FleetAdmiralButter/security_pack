@@ -3,7 +3,6 @@
 /**
  * @file
  * Helper functions for importing configuration.
- * Attribution: https://git.drupalcode.org/project/tide_core/-/blob/master/includes/helpers.inc.
  */
 
 use Drupal\config\StorageReplaceDataWrapper;
@@ -11,6 +10,15 @@ use Drupal\Core\Config\ConfigImporter;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\StorageComparer;
 
+/**
+ * Reads in and parses a YML file as config.
+ * @param $id
+ * @param array $locations
+ * @param bool $prioritise_sync
+ *
+ * @return array|bool|mixed|null
+ * @throws \Exception
+ */
 function _security_pack_read_config($id, array $locations = [], $prioritise_sync = TRUE) {
   static $storages;
 
@@ -39,6 +47,14 @@ function _security_pack_read_config($id, array $locations = [], $prioritise_sync
   return $storages[$path]->read($id);
 }
 
+/**
+ * Accepts a path to a YML file to import as config.
+ * @param $config_name
+ * @param array $locations
+ * @param bool $prioritise_sync
+ *
+ * @throws \Exception
+ */
 function _security_pack_import_single_config($config_name, array $locations = [], $prioritise_sync = TRUE) {
   $config_data = _security_pack_read_config($config_name, $locations, $prioritise_sync);
 
