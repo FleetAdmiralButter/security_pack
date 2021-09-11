@@ -44,7 +44,7 @@ function _security_pack_read_config($id, array $locations = [], $prioritise_sync
 /**
  * Accepts a path to a YML file to import as config.
  */
-function _security_pack_import_single_config($config_name, array $locations = [], $prioritise_sync = TRUE) {
+function _security_pack_import_single_config($config_name, array $locations = [], $prioritise_sync = FALSE) {
   $config_data = _security_pack_read_config($config_name, $locations, $prioritise_sync);
 
   $config_storage = Drupal::service('config.storage');

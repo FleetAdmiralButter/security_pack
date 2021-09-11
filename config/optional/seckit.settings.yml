@@ -5,8 +5,8 @@ seckit_xss:
       x: false
       webkit: false
     report-only: true
-    default-src: '''self'''
-    script-src: '''self'''
+    default-src: '''self'' data:'
+    script-src: '''self'' ''unsafe-eval'' ''unsafe-inline'''
     object-src: ''
     img-src: ''
     media-src: ''
