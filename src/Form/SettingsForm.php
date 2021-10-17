@@ -2,14 +2,14 @@
 
 namespace Drupal\security_pack\Form;
 
-use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\security_pack\SecurityPackOperation;
 
 /**
  * Configure Security Pack settings for this site.
  */
-class SettingsForm extends ConfigFormBase {
+class SettingsForm extends FormBase {
 
   /**
    * {@inheritdoc}
@@ -21,21 +21,7 @@ class SettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  protected function getEditableConfigNames() {
-    return ['security_pack.settings'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['reset'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Reset Security Pack configuration to default?'),
-      '#default_value' => FALSE,
-      '#description' => $this->t('This will reset the configuration for included modules back to default.'),
-    ];
-
     $form['notice'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Notice'),
@@ -45,26 +31,22 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'label',
       '#title' => $this->t('This will reset all settings. If you have made any manual modifications, please note them down now.'),
     ];
-    return parent::buildForm($form, $form_state);
-  }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-
+    $form['actions']['#type'] = 'actions';
+    $form['actions']['submit'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Reset Security Pack configuration'),
+      '#button_type' => 'primary',
+    ];
+    return $form;
   }
 
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    parent::submitForm($form, $form_state);
-
-    if ($form_state->getValue('reset')) {
-      $security_pack = new SecurityPackOperation();
-      $security_pack->importDefaultConfig();
-    }
+    $security_pack = new SecurityPackOperation();
+    $security_pack->importDefaultConfig();
+    \Drupal::messenger()->addMessage('The configuration has been reset successfully');
   }
-
 }
