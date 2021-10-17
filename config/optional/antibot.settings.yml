@@ -1,3 +1,5 @@
 form_ids:
-  - '*'
+  - '*webform*'
+  - '*user*'
+  - '*search*'
 show_form_ids: false
