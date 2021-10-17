@@ -45,8 +45,7 @@ class SettingsForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $security_pack = new SecurityPackOperation();
-    $security_pack->importDefaultConfig();
+    \Drupal::service('security_pack.config_importer')->importDefaultConfig();
     \Drupal::messenger()->addMessage('The configuration has been reset successfully');
   }
 }

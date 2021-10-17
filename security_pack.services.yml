@@ -1,0 +1,4 @@
+services:
+  security_pack.config_importer:
+    class: Drupal\security_pack\SecurityPackOperation
+    arguments: ['@config.factory', '@config.storage', '@event_dispatcher', '@config.manager', '@lock.persistent', '@config.typed', '@module_handler', '@module_installer', '@theme_handler', '@string_translation', '@extension.list.module', '@cache.config']
