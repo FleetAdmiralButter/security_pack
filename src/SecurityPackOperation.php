@@ -18,6 +18,8 @@ use Drupal\Core\ProxyClass\Lock\PersistentDatabaseLockBackend;
 use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 
 /**
  * Class for helper functions.
@@ -35,11 +37,13 @@ class SecurityPackOperation {
   private $stringTranslation;
   private $moduleExtensionList;
   private $cacheConfig;
+  private $logger;
+  private $messenger;
 
   /**
    * Instantiates a new security pack importer service.
    */
-  public function __construct(ConfigFactory $config_factory, CachedStorage $config_storage, ContainerAwareEventDispatcher $event_dispatcher, ConfigManager $config_manager, PersistentDatabaseLockBackend $lock_persistent, TypedConfigManager $config_typed, ModuleHandler $module_handler, ModuleInstaller $module_installer, ThemeHandler $theme_handler, TranslationManager $string_translation, ModuleExtensionList $module_extension_list, CacheBackendInterface $cache_config) {
+  public function __construct(ConfigFactory $config_factory, CachedStorage $config_storage, ContainerAwareEventDispatcher $event_dispatcher, ConfigManager $config_manager, PersistentDatabaseLockBackend $lock_persistent, TypedConfigManager $config_typed, ModuleHandler $module_handler, ModuleInstaller $module_installer, ThemeHandler $theme_handler, TranslationManager $string_translation, ModuleExtensionList $module_extension_list, CacheBackendInterface $cache_config, LoggerChannelFactoryInterface $logger, MessengerInterface $messenger) {
     $this->configFactory = $config_factory;
     $this->configStorage = $config_storage;
     $this->eventDispatcher = $event_dispatcher;
@@ -52,6 +56,8 @@ class SecurityPackOperation {
     $this->stringTranslation = $string_translation;
     $this->moduleExtensionList = $module_extension_list;
     $this->cacheConfig = $cache_config;
+    $this->logger = $logger;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -71,7 +77,6 @@ class SecurityPackOperation {
       $this->configFactory->getEditable($config)->delete();
       $this->importSingleConfig($config, $config_location);
     }
-    drupal_flush_all_caches();
   }
 
   /**
@@ -121,8 +126,8 @@ class SecurityPackOperation {
     }
     catch (Exception $exception) {
       foreach ($config_importer->getErrors() as $error) {
-        \Drupal::logger('security_pack')->error($error);
-        \Drupal::messenger()->addError($error);
+        $this->logger->get('security_pack')->error($error);
+        $this->messenger->addError($error);
       }
       throw $exception;
     }

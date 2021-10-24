@@ -4,11 +4,35 @@ namespace Drupal\security_pack\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\security_pack\SecurityPackOperation;
+use Drupal\Core\Messenger\MessengerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configure Security Pack settings for this site.
  */
 class SettingsForm extends FormBase {
+
+  protected $securityPackImporter;
+  protected $messenger;
+
+  /**
+   * Instantiates dependencies for the settings form.
+   */
+  public function __construct(SecurityPackOperation $security_pack, MessengerInterface $messenger) {
+    $this->securityPackImporter = $security_pack;
+    $this->messenger = $messenger;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('security_pack.config_importer'),
+      $container->get('messenger')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -44,8 +68,8 @@ class SettingsForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    \Drupal::service('security_pack.config_importer')->importDefaultConfig();
-    \Drupal::messenger()->addMessage('The configuration has been reset successfully');
+    $this->securityPackImporter->importDefaultConfig();
+    $this->messenger->addMessage('The configuration has been reset successfully');
   }
 
 }
