@@ -4,7 +4,6 @@ namespace Drupal\security_pack\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\security_pack\SecurityPackOperation;
 
 /**
  * Configure Security Pack settings for this site.
@@ -48,4 +47,5 @@ class SettingsForm extends FormBase {
     \Drupal::service('security_pack.config_importer')->importDefaultConfig();
     \Drupal::messenger()->addMessage('The configuration has been reset successfully');
   }
+
 }

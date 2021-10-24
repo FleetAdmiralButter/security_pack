@@ -2,7 +2,6 @@
 
 namespace Drupal\security_pack;
 
-use Drupal;
 use Drupal\config\StorageReplaceDataWrapper;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Config\ConfigImporter;
@@ -24,35 +23,35 @@ use Drupal\Core\Cache\CacheBackendInterface;
  * Class for helper functions.
  */
 class SecurityPackOperation {
+  private $configFactory;
+  private $configStorage;
+  private $eventDispatcher;
+  private $configManager;
+  private $lockPersistent;
+  private $typedConfigManager;
+  private $moduleHandler;
+  private $moduleInstaller;
+  private $themeHandler;
+  private $stringTranslation;
+  private $moduleExtensionList;
+  private $cacheConfig;
 
   /**
-   * {@inheritdoc}
+   * Instantiates a new security pack importer service.
    */
-  private $config_factory;
-  private $config_storage;
-  private $event_dispatcher;
-  private $config_manager;
-  private $lock_persistent;
-  private $config_typed;
-  private $module_handler;
-  private $module_installer;
-  private $theme_handler;
-  private $string_translation;
-  private $module_extension_list;
-  private $cache_config;
   public function __construct(ConfigFactory $config_factory, CachedStorage $config_storage, ContainerAwareEventDispatcher $event_dispatcher, ConfigManager $config_manager, PersistentDatabaseLockBackend $lock_persistent, TypedConfigManager $config_typed, ModuleHandler $module_handler, ModuleInstaller $module_installer, ThemeHandler $theme_handler, TranslationManager $string_translation, ModuleExtensionList $module_extension_list, CacheBackendInterface $cache_config) {
-    $this->config_factory = $config_factory;
-    $this->config_storage = $config_storage;
-    $this->event_dispatcher = $event_dispatcher;
-    $this->config_manager = $config_manager;
-    $this->lock_persistent = $lock_persistent;
-    $this->config_typed = $config_typed;
-    $this->module_handler = $module_handler;
-    $this->module_installer = $module_installer;
-    $this->theme_handler = $theme_handler;
-    $this->string_translation = $string_translation;
-    $this->module_extension_list = $module_extension_list;
-    $this->cache_config = $cache_config;
+    $this->configFactory = $config_factory;
+    $this->configStorage = $config_storage;
+    $this->eventDispatcher = $event_dispatcher;
+    $this->configManager = $config_manager;
+    $this->lockPersistent = $lock_persistent;
+    $this->typedConfigManager = $config_typed;
+    $this->moduleHandler = $module_handler;
+    $this->moduleInstaller = $module_installer;
+    $this->themeHandler = $theme_handler;
+    $this->stringTranslation = $string_translation;
+    $this->moduleExtensionList = $module_extension_list;
+    $this->cacheConfig = $cache_config;
   }
 
   /**
@@ -69,25 +68,28 @@ class SecurityPackOperation {
     module_load_include('inc', 'security_pack', 'includes/helpers');
     $config_location = [drupal_get_path('module', 'security_pack') . '/config/optional'];
     foreach ($configs as $config) {
-      $this->config_factory->getEditable($config)->delete();
+      $this->configFactory->getEditable($config)->delete();
       $this->importSingleConfig($config, $config_location);
     }
     drupal_flush_all_caches();
   }
 
+  /**
+   * Import a single config file.
+   */
   public function importSingleConfig($config_name, array $locations = [], $prioritise_sync = FALSE) {
     $config_data = $this->readConfig($config_name, $locations, $prioritise_sync);
 
-    $config_storage = $this->config_storage;
-    $event_dispatcher = $this->event_dispatcher;
-    $config_manager = $this->config_manager;
-    $lock_persistent = $this->lock_persistent;
-    $config_typed = $this->config_typed;
-    $module_handler = $this->module_handler;
-    $module_installer = $this->module_installer;
-    $theme_handler = $this->theme_handler;
-    $string_translation = $this->string_translation;
-    $module_extension_list = $this->module_extension_list;
+    $config_storage = $this->configStorage;
+    $event_dispatcher = $this->eventDispatcher;
+    $config_manager = $this->configManager;
+    $lock_persistent = $this->lockPersistent;
+    $config_typed = $this->typedConfigManager;
+    $module_handler = $this->moduleHandler;
+    $module_installer = $this->moduleInstaller;
+    $theme_handler = $this->themeHandler;
+    $string_translation = $this->stringTranslation;
+    $module_extension_list = $this->moduleExtensionList;
 
     $source_storage = new StorageReplaceDataWrapper($config_storage);
     $source_storage->replaceData($config_name, $config_data);
@@ -115,17 +117,20 @@ class SecurityPackOperation {
 
     try {
       $config_importer->import();
-      $this->cache_config->delete($config_name);
+      $this->cacheConfig->delete($config_name);
     }
     catch (Exception $exception) {
       foreach ($config_importer->getErrors() as $error) {
-        Drupal::logger('security_pack')->error($error);
-        Drupal::messenger()->addError($error);
+        \Drupal::logger('security_pack')->error($error);
+        \Drupal::messenger()->addError($error);
       }
       throw $exception;
     }
   }
 
+  /**
+   * Reads in a single config yml file.
+   */
   private function readConfig($id, array $locations = [], $prioritise_sync = TRUE) {
     static $storages;
 
