@@ -18,8 +18,7 @@ function security_pack_install() {
 
   // Import configuration for other modules separately
   // to avoid PreExistingConfigExceptions.
-  $security_pack = new SecurityPackOperation();
-  $security_pack->importDefaultConfig();
+  \Drupal::service('security_pack.config_importer')->importDefaultConfig();
 }
 
 /**
@@ -78,6 +77,5 @@ function security_pack_uninstall() {
  * Re-install config due to a rewrite of handlers.
  */
 function security_pack_update_8001() {
-  $security_pack = new SecurityPackOperation();
-  $security_pack->importDefaultConfig();
+  \Drupal::service('security_pack.config_importer')->importDefaultConfig();
 }
