@@ -89,8 +89,6 @@ class SecurityPackOperation {
     $string_translation = $this->string_translation;
     $module_extension_list = $this->module_extension_list;
 
-    Drupal::config($config_name);
-
     $source_storage = new StorageReplaceDataWrapper($config_storage);
     $source_storage->replaceData($config_name, $config_data);
 
