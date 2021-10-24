@@ -71,7 +71,6 @@ class SecurityPackOperation {
       'seckit.settings',
       'password_policy.password_policy.security_pack_default',
     ];
-    module_load_include('inc', 'security_pack', 'includes/helpers');
     $config_location = [drupal_get_path('module', 'security_pack') . '/config/optional'];
     foreach ($configs as $config) {
       $this->configFactory->getEditable($config)->delete();
