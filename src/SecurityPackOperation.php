@@ -81,8 +81,8 @@ class SecurityPackOperation {
   /**
    * Import a single config file.
    */
-  public function importSingleConfig($config_name, array $locations = [], $prioritise_sync = FALSE) {
-    $config_data = $this->readConfig($config_name, $locations, $prioritise_sync);
+  public function importSingleConfig($config_name, array $locations = []) {
+    $config_data = $this->readConfig($config_name, $locations);
 
     $config_storage = $this->configStorage;
     $event_dispatcher = $this->eventDispatcher;
@@ -135,19 +135,8 @@ class SecurityPackOperation {
   /**
    * Reads in a single config yml file.
    */
-  private function readConfig($id, array $locations = [], $prioritise_sync = TRUE) {
+  private function readConfig($id, array $locations = []) {
     static $storages;
-
-    global $config_directories;
-
-    if (!$prioritise_sync) {
-      // CONFIG_SYNC has lower priority.
-      array_push($locations, $config_directories[CONFIG_SYNC_DIRECTORY]);
-    }
-    else {
-      // CONFIG_SYNC has top priority.
-      array_unshift($locations, $config_directories[CONFIG_SYNC_DIRECTORY]);
-    }
 
     foreach ($locations as $path) {
       if (file_exists($path . DIRECTORY_SEPARATOR . $id . '.yml')) {
